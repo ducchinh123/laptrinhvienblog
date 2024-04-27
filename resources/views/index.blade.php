@@ -8,7 +8,7 @@
     <title>Blog | Lập trình viên</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <base href="http://127.0.0.1:8000/">
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -30,7 +30,7 @@
     <!-- Template Main CSS Files -->
     <link href="{{ asset('assets/css/variables.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
-
+    <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
     <!-- =======================================================
   * Template Name: ZenBlog
   * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
@@ -77,7 +77,7 @@
                         class="bi-instagram"></span></a>
                 <a href="https://www.youtube.com/channel/UCTndRQVS4R72kFrL1BWbwoA" style="font-size: 18px;"
                     target="_blank" class="mx-2"><i class="bi bi-youtube"></i></span></a>
-
+                    <a href="{{ route('c-login') }}" style="padding-left: 6px; padding-right: 6px;" title="Tài khoản"><span><i class="bi bi-person-circle"></i></span></a>
 
                 <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -91,8 +91,10 @@
                     </form>
                 </div><!-- End Search Form -->
 
-            </div>
+                
 
+            </div>
+            
         </div>
 
     </header><!-- End Header -->
