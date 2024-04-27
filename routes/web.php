@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,12 +67,10 @@ Route::prefix('/devC/wp-admin')->group(function () {
 
     // ==================== ROUTE CATEGORY ====================
 
-    Route::get('/category-index', function () {
-        return view('admin.category.index');
-    })->name('devC-cate-index');
-    Route::get('/category-add', function () {
-        return view('admin.category.add');
-    })->name('devC-cate-add');
+    Route::get('/category-index', [CategoryController::class, 'IndexCategory'])->name('devC-cate-index');
+    Route::delete('/category-delete/{id}', [CategoryController::class, 'DeleteCategory'])->name('devC-cate-delete');
+    Route::POST('/category-add-start', [CategoryController::class, 'CreateCategory'])->name('devC-cate-add-start');
+    Route::GET('/category-add', function() {return view('admin.category.add');})->name('devC-cate-add');
     Route::get('/category-update', function () {
         return view('admin.category.update');
     })->name('devC-cate-update');
@@ -89,15 +88,15 @@ Route::prefix('/devC/wp-admin')->group(function () {
 
     // ==================== ROUTE SETTING ====================
 
-    Route::get('/setting-user', function() {
+    Route::get('/setting-user', function () {
         return view('admin.setting.users');
     })->name('devC-user');
 
-    Route::get('/setting-boot', function() {
+    Route::get('/setting-boot', function () {
         return view('admin.setting.boot');
     })->name('devC-boot');
 
-    Route::get('/setting-overview', function() {
+    Route::get('/setting-overview', function () {
         return view('admin.setting.overview');
     })->name('devC-overview');
 });
