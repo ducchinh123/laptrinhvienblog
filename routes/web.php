@@ -68,12 +68,13 @@ Route::prefix('/devC/wp-admin')->group(function () {
     // ==================== ROUTE CATEGORY ====================
 
     Route::get('/category-index', [CategoryController::class, 'IndexCategory'])->name('devC-cate-index');
+    Route::get('/category-trash', [CategoryController::class, 'TrashCategory'])->name('devC-cate-trash');
+    Route::get('/category-restore/{id}', [CategoryController::class, 'RestoreCategory'])->name('devC-cate-restore');
     Route::delete('/category-delete/{id}', [CategoryController::class, 'DeleteCategory'])->name('devC-cate-delete');
     Route::POST('/category-add-start', [CategoryController::class, 'CreateCategory'])->name('devC-cate-add-start');
     Route::GET('/category-add', function() {return view('admin.category.add');})->name('devC-cate-add');
-    Route::get('/category-update', function () {
-        return view('admin.category.update');
-    })->name('devC-cate-update');
+    Route::GET('/category-update/{id}', [CategoryController::class, 'EditCategory'])->name('devC-cate-update');
+    Route::POST('/category-update-start/{id}', [CategoryController::class, 'UpdateCategory'])->name('devC-cate-update-start');
     // ==================== ROUTE VIDEO ====================
 
     Route::get('/video-index', function () {
@@ -82,9 +83,9 @@ Route::prefix('/devC/wp-admin')->group(function () {
     Route::get('/video-add', function () {
         return view('admin.video.add');
     })->name('devC-video-add');
-    Route::get('/category-update', function () {
-        return view('admin.category.update');
-    })->name('devC-cate-update');
+    // Route::get('/category-update', function () {
+    //     return view('admin.category.update');
+    // })->name('devC-cate-update');
 
     // ==================== ROUTE SETTING ====================
 

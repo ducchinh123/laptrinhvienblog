@@ -4,11 +4,16 @@
         <div id="content__topic--1">
             <h5 class="">QUẢN LÝ DANH MỤC</h5>
         </div>
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="table-responsive mt-3">
             <table class="table table-striped">
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-cate-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> | <a href="{{ route('devC-cate-trash') }}" style="text-decoration: none">Thùng rác ({{ $dataDeleted }})</a></td>
+                        <td><a href="{{ route('devC-cate-index') }}" style="text-decoration: none">Trở về</a></td>
                     </caption>
                     <tr>
                         <td>ID</td>
@@ -25,10 +30,8 @@
                             <td class="this-title">{{ $item->name }}</td>
                             <td class="this-desc">{{ $item->desc }}</td>
                             <td>{{ $item->created_at }}</td>
-                            <td><a href="{{ route('devC-cate-update', ['id' => $item->id]) }}" class="btn btn-primary"><i
-                                        class="bi bi-pencil-square"></i></a> <button
-                                    onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
-                                        class="bi bi-trash"></i></button></td>
+                            <td><a href="{{ route('devC-cate-restore', ['id' => $item->id]) }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-share-from-square"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -96,6 +99,5 @@
                 }
             }
         }
-
     </script>
 @endpush
