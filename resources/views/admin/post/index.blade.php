@@ -6,9 +6,14 @@
         </div>
         <div class="table-responsive mt-3">
             <table class="table table-striped">
-                
+
                 <thead>
-                    <caption><td><a href="{{ route('devC-post-add') }}" class="btn btn-success">Thêm mới</a></td></caption>
+                    <caption>
+                        <td><a href="{{ route('devC-post-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> |
+                            <a href="{{ route('devC-post-trash') }}" style="text-decoration: none">Thùng rác
+                                ({{ $deletedCount }})
+                            </a>
+                        </td>
                     <tr>
                         <td>ID</td>
                         <td>Tên bài viết</td>
@@ -18,36 +23,84 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td class="this-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum porro enim quia nostrum, numquam, esse, asperiores exercitationem sint aliquid quaerat corporis! Vero officiis reprehenderit quae in reiciendis accusamus! Voluptatem, sit.</td>
-                        <td class="this-desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel, fugiat possimus animi quaerat ullam vitae maiores nulla officia ut accusamus? Rem, soluta animi blanditiis dignissimos, assumenda autem temporibus modi error maiores ipsum expedita sint accusantium similique sit, atque sapiente perferendis enim tempore possimus harum? Quibusdam neque, tempora aspernatur quidem, necessitatibus quod voluptatum magni expedita esse eaque nobis, laudantium nemo architecto sapiente iure. Molestias!</td>
-                        <td>26/04/2024</td>
-                        <td><a href="{{ route('devC-post-update') }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> <button class="btn btn-danger"><i class="bi bi-trash"></i></button></td>
-                    </tr>
+                    @foreach ($datas as $item)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td class="this-title">{{ $item->title }}</td>
+                            <td class="this-desc">{!! $item->desc_short !!}</td>
+                            <td>{{ $item->created_at }}</td>
+                            <td><a href="{{ route('devC-post-update', ['id' => $item->id ]) }}" class="btn btn-primary"><i
+                                        class="bi bi-pencil-square"></i></a> <button
+                                    onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
+                                        class="bi bi-trash"></i></button></td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
-                
+
             </table>
         </div>
+        {!! $datas->links() !!}
     </div>
+    <div style="display: none;" id="aebncv"><?php echo env('APP_SERVER'); ?></div>
 @endsection
 
 @section('cut-string')
-<script type="text/javascript">
-    var listTitle = document.querySelectorAll(".this-title");
-    var listDesc = document.querySelectorAll(".this-desc");
-    listTitle.forEach(element => {
-        if(element.innerHTML.trim().length > 38) {
-            var newTtitle = element.innerHTML.trim().slice(0, 38) + "...";
-            element.innerHTML = newTtitle;
-        }
-    });
+    <script type="text/javascript">
+        var listTitle = document.querySelectorAll(".this-title");
+        var listDesc = document.querySelectorAll(".this-desc");
+        listTitle.forEach(element => {
+            if (element.innerHTML.trim().length > 38) {
+                var newTtitle = element.innerHTML.trim().slice(0, 38) + "...";
+                element.innerHTML = newTtitle;
+            }
+        });
 
-    listDesc.forEach(element => {
-        if(element.innerHTML.trim().length > 60) {
-            var newDesc = element.innerHTML.trim().slice(0, 60) + "...";
-            element.innerHTML = newDesc;
-        }
-    })
-</script>    
+        listDesc.forEach(element => {
+            if (element.innerHTML.trim().length > 60) {
+                var newDesc = element.innerHTML.trim().slice(0, 60) + "...";
+                element.innerHTML = newDesc;
+            }
+        })
+    </script>
 @endsection
+
+@push('js-admin')
+    <script>
+        const handleDelete = async (id) => {
+            if (id) {
+                try {
+                    Swal.fire({
+                        title: "Bạn có chắc muốn xóa?",
+                        text: "",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Vâng, tôi xóa!",
+                        cancelButtonText: "Thoát",
+                    }).then(async (result) => { // Thêm async ở đây
+                        if (result.isConfirmed) {
+                            const server = document.querySelector('#aebncv').innerHTML.trim();
+                            const response = await axios.delete(
+                                `${server}devC/wp-admin/post-delete/${id}`);
+
+                            if (response.status == 200) {
+                                Swal.fire({
+                                    position: "top-center",
+                                    icon: "success",
+                                    title: "Xóa bản ghi thành công!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                location.reload();
+                            }
+                        }
+                    });
+                } catch (error) {
+                    // Xử lý lỗi nếu cần
+                }
+            }
+        }
+    </script>
+@endpush

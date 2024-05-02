@@ -11,13 +11,13 @@ class CategoryController extends Controller
 {
     public function IndexCategory()
     {
-        $datas = DB::table('categorys_tbl')->whereNull('deleted_at')->select('id', 'name', 'desc', 'created_at')->get();
+        $datas = DB::table('categorys_tbl')->whereNull('deleted_at')->select('id', 'name', 'desc', 'created_at')->orderBy('id', 'desc')->paginate(5);
         $dataDeleted = Category::onlyTrashed()->count();
         return view('admin.category.index', compact('datas', 'dataDeleted'));
     }
     public function TrashCategory()
     {
-        $datas = Category::onlyTrashed()->get();
+        $datas = Category::onlyTrashed()->orderBy('id', 'desc')->paginate(5);
         return view('admin.category.trash', compact('datas'));
     }
 

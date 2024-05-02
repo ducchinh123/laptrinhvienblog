@@ -8,7 +8,10 @@
             <table class="table table-striped">
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-cate-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> | <a href="{{ route('devC-cate-trash') }}" style="text-decoration: none">Thùng rác ({{ $dataDeleted }})</a></td>
+                        <td><a href="{{ route('devC-cate-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> |
+                            <a href="{{ route('devC-cate-trash') }}" style="text-decoration: none">Thùng rác
+                                ({{ $dataDeleted }})</a>
+                        </td>
                     </caption>
                     <tr>
                         <td>ID</td>
@@ -35,6 +38,9 @@
 
             </table>
         </div>
+
+        {!! $datas->links() !!}
+
     </div>
     <div style="display: none;" id="aebncv"><?php echo env('APP_SERVER'); ?></div>
 @endsection
@@ -96,6 +102,5 @@
                 }
             }
         }
-
     </script>
 @endpush

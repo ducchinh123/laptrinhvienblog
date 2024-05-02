@@ -37,6 +37,8 @@
                 </tbody>
 
             </table>
+
+            {!! $datas->links() !!}
         </div>
     </div>
     <div style="display: none;" id="aebncv"><?php echo env('APP_SERVER'); ?></div>

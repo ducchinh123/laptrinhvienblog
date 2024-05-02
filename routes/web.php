@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,17 +54,15 @@ Route::prefix('/devC/wp-admin')->group(function () {
     })->name('devC-admin');
 
     // ==================== ROUTE POST ====================
-    Route::get('/post-index', function () {
-        return view('admin.post.index');
-    })->name('devC-post-index');
+    Route::get('/post-index', [PostController::class, 'IndexPost'])->name('devC-post-index');
+    Route::delete('/post-delete/{id}', [PostController::class, 'DeletePost'])->name('devC-post-delete');
+    Route::get('/post-trash', [PostController::class, 'TrashPost'])->name('devC-post-trash');
+    Route::get('/post-restore/{id}', [PostController::class, 'RestorePost'])->name('devC-post-restore');
+    Route::get('/post-add', [PostController::class, 'CreatePost'])->name('devC-post-add');
+    Route::POST('/post-add-start', [PostController::class, 'CreatePostStart'])->name('devC-post-add-start');
 
-    Route::get('/post-add', function () {
-        return view('admin.post.add');
-    })->name('devC-post-add');
-
-    Route::get('/post-update', function () {
-        return view('admin.post.update');
-    })->name('devC-post-update');
+    Route::get('/post-update/{id}',[PostController::class, 'EditPost'])->name('devC-post-update');
+    Route::post('/post-update-start/{id}', [PostController::class, 'UpdatePostStart'])->name('devC-post-update-start');
 
     // ==================== ROUTE CATEGORY ====================
 
@@ -72,7 +71,9 @@ Route::prefix('/devC/wp-admin')->group(function () {
     Route::get('/category-restore/{id}', [CategoryController::class, 'RestoreCategory'])->name('devC-cate-restore');
     Route::delete('/category-delete/{id}', [CategoryController::class, 'DeleteCategory'])->name('devC-cate-delete');
     Route::POST('/category-add-start', [CategoryController::class, 'CreateCategory'])->name('devC-cate-add-start');
-    Route::GET('/category-add', function() {return view('admin.category.add');})->name('devC-cate-add');
+    Route::GET('/category-add', function () {
+        return view('admin.category.add');
+    })->name('devC-cate-add');
     Route::GET('/category-update/{id}', [CategoryController::class, 'EditCategory'])->name('devC-cate-update');
     Route::POST('/category-update-start/{id}', [CategoryController::class, 'UpdateCategory'])->name('devC-cate-update-start');
     // ==================== ROUTE VIDEO ====================

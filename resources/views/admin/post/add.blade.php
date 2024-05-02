@@ -4,7 +4,13 @@
         <div id="content__topic--1">
             <h5 class="">THÊM MỚI BÀI VIẾT</h5>
         </div>
-        <form action="" class="mt-3">
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
+        <form action="{{ route('devC-post-add-start') }}" method="POST" class="mt-3" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md-6">
 
@@ -19,49 +25,66 @@
                                                 font-size: 65px;
                                                 top: 77px;
                                                 left: 44%;"></i></label>
-                                <input type="file" id="image-upload" name="" style="display: none;"
-                                    id="">
+                                <img src="" id="preview-image" alt="">
+                                <input type="file" id="image-upload" accept="image/*" name="overview_photo"
+                                    style="display: none;" id="">
                             </div>
+                            @error('overview_photo')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-12">
                             <label for="title" class="form-label">Danh mục</label>
-                            <select class="js-example-disabled-results form-control">
-                                <option value="one">First</option>
-                                <option value="one">First 1</option>
-                                <option value="one">First 2</option>
-                                <option value="one">First 3</option>
-                                <option value="one">First 4</option>
+                            <select class="js-example-disabled-results form-control" name="category_id">
+                                @foreach ($categories as $cate)
+                                    <option value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                @endforeach
                             </select>
                         </div>
+                        @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="title" class="form-label">Tên bài viết</label>
-                        <input type="text" id="title" class="form-control" placeholder="Tên bài viết">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Tên bài viết">
+                        @error('title')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="title" class="form-label">Tóm tắt bài viết</label>
-                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                        <textarea name="desc_short" class="form-control" id="" cols="30" rows="10"></textarea>
+                        @error('desc_short')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Ngày xuất bản</label>
-                                <input type="date" class="form-control" name="" id="">
+                                <input type="date" class="form-control" name="date_submitted" id="">
+                                @error('date_submitted')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Tác giả</label>
-                                <input type="text" class="form-control" name="" id="">
+                                <input type="text" class="form-control" name="author" id="" readonly value="DEVC">
+                                @error('author')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -69,7 +92,10 @@
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="desc" class="form-label">Nội dung bài viết</label>
-                        <textarea name="" id="ckeditor" class="ckeditor" cols="30" rows="10"></textarea>
+                        <textarea name="desc_detail" id="ckeditor" class="ckeditor" cols="30" rows="10"></textarea>
+                        @error('desc_detail')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -86,5 +112,27 @@
     <script>
         var $disabledResults = $(".js-example-disabled-results");
         $disabledResults.select2();
+    </script>
+@endpush
+
+@push('js-admin')
+    <script>
+        var chooseFile = document.querySelector('#image-upload');
+        chooseFile.addEventListener('change', (event) => {
+            const input = event.target
+            if (input.files && input.files[0]) {
+                const selectedFile = input.files[0]
+                const reader = new FileReader()
+
+                reader.onload = function(e) {
+                    const previewImage = document.getElementById('preview-image')
+                    previewImage.src = e.target.result
+                }
+
+                reader.readAsDataURL(selectedFile)
+
+
+            }
+        })
     </script>
 @endpush

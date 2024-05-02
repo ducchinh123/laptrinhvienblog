@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <meta name="description"
         content="Sinh Viên It là một blog của một cậu sinh viên theo ngành it (mảng lập trình website), qua blog này
     cậu sinh viên muốn viết ra đây những lời tâm sự, sự trải nghiệm, niềm vui nỗi buồn mà cá nhân cậu ấy cảm nhận được. Không mong blog
@@ -18,9 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
-
     <style>
         /* Màn hình điện thoại */
 
@@ -127,6 +123,9 @@
         }
     </style>
     <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap5/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
     <title>SinhvienitBlog.online</title>
 </head>
 
@@ -143,7 +142,7 @@
                                 <ul>
                                     <li style="display: none">
                                         <audio id="myAudio" ref="myAudio" controls type="audio/mp3"
-                                            src="../../assets/hoacolau.mp3"></audio>
+                                            src=""></audio>
                                     </li>
 
                                     <li id="menu-customize">
@@ -183,8 +182,7 @@
                     <ul>
                         <li class="boot">Danh sách menu</li>
                         <li style="display: none">
-                            <audio id="myAudio" ref="myAudio" controls type="audio/mp3"
-                                src="../../assets/hoacolau.mp3"></audio>
+                            <audio id="myAudio" ref="myAudio" controls type="audio/mp3" src=""></audio>
                         </li>
                         <li><a href="">Dashboard</a></li>
                         <li><a href="{{ route('devC-post-index') }}">Quản lý bài viết</a></li>
@@ -228,8 +226,10 @@
                             <span><i class="bi bi-caret-down-fill"></i></span>
                             <!-- <i class="bi bi-caret-up-fill"></i> -->
                             <ul class="setting-submenu unactive">
-                                <li><i class="bi bi-palette"></i> <a href="{{ route('devC-overview') }}">Tổng quan</a></li>
-                                <li><i class="bi bi-person-check"></i> <a href="{{ route('devC-user') }}">Tài khoản</a></li>
+                                <li><i class="bi bi-palette"></i> <a href="{{ route('devC-overview') }}">Tổng
+                                        quan</a></li>
+                                <li><i class="bi bi-person-check"></i> <a href="{{ route('devC-user') }}">Tài
+                                        khoản</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -250,18 +250,12 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-    integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 @stack('select2')
 <script src="{{ asset('assets/js/admin.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="{{ asset('assets/bootstrap5/js/bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
 </html>
