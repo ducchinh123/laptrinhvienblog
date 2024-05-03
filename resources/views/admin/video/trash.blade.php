@@ -4,14 +4,17 @@
         <div id="content__topic--1">
             <h5 class="">QUẢN LÝ VIDEO</h5>
         </div>
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="table-responsive mt-3">
             <table class="table table-striped">
 
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-video-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> |
-                            <a href="{{ route('devc-video-trash') }}" style="text-decoration: none">Thùng rác
-                                ({{ $countDeleted }})
+                        <td><a href="{{ route('devC-video-index') }}" style="text-decoration: none" class="atable">Trở về
                             </a>
                         </td>
                     </caption>
@@ -36,9 +39,8 @@
                                     allowfullscreen></iframe>
                             </td>
                             <td>{{ $item->name }}</td>
-                            <td><a href="{{ route('devC-video-update', ['id' => $item->id]) }}" class="btn btn-primary"><i
-                                        class="bi bi-pencil-square"></i></a> <button onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
-                                        class="bi bi-trash"></i></button></td>
+                            <td><a href="{{ route('devc-video-restore', ['id' => $item->id]) }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-share-from-square"></i></a></td>
                         </tr>
                     @endforeach
 

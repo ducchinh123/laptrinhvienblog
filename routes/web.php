@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,16 +79,14 @@ Route::prefix('/devC/wp-admin')->group(function () {
     Route::POST('/category-update-start/{id}', [CategoryController::class, 'UpdateCategory'])->name('devC-cate-update-start');
     // ==================== ROUTE VIDEO ====================
 
-    Route::get('/video-index', function () {
-        return view('admin.video.index');
-    })->name('devC-video-index');
-    Route::get('/video-add', function () {
-        return view('admin.video.add');
-    })->name('devC-video-add');
-    // Route::get('/category-update', function () {
-    //     return view('admin.category.update');
-    // })->name('devC-cate-update');
-
+    Route::get('/video-index',[VideoController::class, 'IndexVideo'])->name('devC-video-index');
+    Route::get('/video-add', [VideoController::class, 'CreateVideo'])->name('devC-video-add');
+    Route::post('/video-add-start', [VideoController::class, 'CreateVideoStart'])->name('devC-video-add-start');
+    Route::get('/video-update/{id}', [VideoController::class, 'UpdateVideo'])->name('devC-video-update');
+    Route::post('/video-update-start/{id}', [VideoController::class, 'UpdateVideoStart'])->name('devC-video-update-start');
+    Route::delete('/video-delete/{id}', [VideoController::class, 'DeleteVideo'])->name('devc-video-delete');
+    Route::get('/video-trash', [VideoController::class, 'TrashVideo'])->name('devc-video-trash');
+    Route::get('/video-restore/{id}', [VideoController::class, 'RestoreVideo'])->name('devc-video-restore');
     // ==================== ROUTE SETTING ====================
 
     Route::get('/setting-user', function () {

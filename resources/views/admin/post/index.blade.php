@@ -14,6 +14,7 @@
                                 ({{ $deletedCount }})
                             </a>
                         </td>
+                    </caption>
                     <tr>
                         <td>ID</td>
                         <td>Tên bài viết</td>

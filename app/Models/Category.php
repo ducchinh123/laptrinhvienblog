@@ -20,6 +20,7 @@ class Category extends Model
         static::deleted(function ($category) {
             // những post ở đây tôi thấy sẽ toàn là post với điều kiện chưa được xóa mềm, thì việc cập nhật sẽ đúng
             $posts = $category->posts()->get();
+            $videos = $category->videos()->get();
             $boolean = DB::table('categorys_tbl')->where('name', 'Chưa phân loại')->exists();
             if (!$boolean) {
                 $insert = DB::table('categorys_tbl')->insertGetId([
@@ -40,7 +41,19 @@ class Category extends Model
                         'overview_photo' => $post->overview_photo
                     ];
 
-                    $updateCate = Post::where('id', $post->id)->update($data);
+                    $updatePost = Post::where('id', $post->id)->update($data);
+                }
+
+
+                foreach ($videos as $video) {
+                    $data = [
+                        'title' => $video->title,
+                        'link_youtube' => $video->link_youtube,
+                        'category_id' => $insert,
+                        'image_video' => $video->image_video
+                    ];
+
+                    $updateVideo = Video::where('id', $video->id)->update($data);
                 }
 
             } else {
@@ -56,7 +69,20 @@ class Category extends Model
                         'overview_photo' => $post->overview_photo
                     ];
 
-                    $updateCate = Post::where('id', $post->id)->update($data);
+                    $updatePost = Post::where('id', $post->id)->update($data);
+                }
+
+
+
+                foreach ($videos as $video) {
+                    $data = [
+                        'title' => $video->title,
+                        'link_youtube' => $video->link_youtube,
+                        'category_id' => $Cate->id,
+                        'image_video' => $video->image_video
+                    ];
+
+                    $updateVideo = Video::where('id', $video->id)->update($data);
                 }
             }
         });
@@ -67,5 +93,9 @@ class Category extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 
 }

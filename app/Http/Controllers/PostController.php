@@ -182,7 +182,7 @@ class PostController extends Controller
                     'author' => $post->author,
                     'overview_photo' => $post->overview_photo
                 ];
-                $updateCate = $post->update($data);
+                $updatePost = $post->update($data);
             }
 
             $post->restore();
