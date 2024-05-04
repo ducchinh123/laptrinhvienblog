@@ -3,7 +3,9 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,11 +47,17 @@ Route::get('/dang-ky.html', function () {
     return view('client.register');
 })->name('c-register');
 
+
+
+// Route::get('/dashboard', function () {
+//     return view('admin.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 // ====================== ADMIN =================================== //
 
 
 
-Route::prefix('/devC/wp-admin')->group(function () {
+Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('devC-admin');
@@ -97,7 +105,15 @@ Route::prefix('/devC/wp-admin')->group(function () {
         return view('admin.setting.boot');
     })->name('devC-boot');
 
-    Route::get('/setting-overview', function () {
-        return view('admin.setting.overview');
-    })->name('devC-overview');
+    Route::get('/setting-overview', [SettingController::class, 'IndexSetting'])->name('devC-overview');
+    Route::post('/setting-overview-change', [SettingController::class, 'ChangeSystem'])->name('devC-change-system');
 });
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

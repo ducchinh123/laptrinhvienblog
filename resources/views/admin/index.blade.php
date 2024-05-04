@@ -11,7 +11,7 @@
     <meta name="keywords" content="Blog giải trí, blog tâm sự, blog chia sẻ kiến thức, công nghệ thông tin">
     <meta name="author" content="Đặng Đức Chính - Sinh viên ngành web">
     <meta name="language" content="vietnamese">
-    <link rel="icon" type="image/png" href="./src/assets/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/DevC.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -136,7 +136,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 very-top-2">
-                            <div class="header__item--2__left"><a href="{{ route('devC-admin') }}">Vua Công Nghệ</a>
+                            <div class="header__item--2__left"><a href="{{ route('devC-admin') }}">DevC Blog | @if (Auth::user())
+                                {{ Auth::user()->name }}
+                            @endif</a>
                             </div>
                             <div class="header__item--2__center">
                                 <ul>
@@ -167,7 +169,12 @@
                                     <input type="text" name="" placeholder="Tìm kiếm bài viết..."
                                         id="" />
                                     <button type="submit" class="ml-1">Tìm kiếm</button>
+
+                                    @if (Auth::user())
+                                    <a href="{{ route('logout') }}" class="btn"><i class="fa-solid fa-power-off" style="font-size: 20px; color: white;"></i></a>
+                                    @endif
                                 </form>
+                                
                             </div>
 
                             <div id="bar-menu"><i class="fa-solid fa-bars"></i></div>
@@ -188,14 +195,15 @@
                         <li><a href="{{ route('devC-post-index') }}">Quản lý bài viết</a></li>
                         <li><a href="{{ route('devC-cate-index') }}">Quản lý danh mục</a></li>
                         <li><a href="{{ route('devC-video-index') }}">Quản lý video</a></li>
-                        <li id="sm-level-2">
+                        <li id="sm-level-2" style="padding-bottom: 30px;">
                             Cài đặt <i class="bi bi-caret-down-fill"></i>
                             <ul>
                                 <li><a href="{{ route('devC-overview') }}">Tổng quan</a></li>
                                 <li><a href="{{ route('devC-user') }}">Tài khoản</a></li>
+                                <li><a href="">Đăng xuất</a></li>
                             </ul>
                         </li>
-                        <li class="inputSearchMini">
+                        <li class="inputSearchMini" class="mt-3">
                             <form action="">
                                 <input type="text" name="" placeholder="Nhập từ khóa" id="" />
                                 <button>Tìm kiếm</button>
