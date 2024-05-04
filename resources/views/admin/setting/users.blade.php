@@ -9,7 +9,7 @@
 
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-boot') }}" style="text-decoration: none">Tài khoản của tôi</a> | <a href="" style="text-decoration: none">Phân quyền</a></td>
+                        <td><a href="{{ route('devC-boot') }}" style="text-decoration: none">Tài khoản của tôi</a> | <a href="{{ route('decentralization-index') }}" style="text-decoration: none">Phân quyền</a></td>
                     </caption>
                     <tr>
                         <td>ID</td>

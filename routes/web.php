@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\DecentralizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VideoController;
@@ -71,7 +72,7 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
     Route::get('/post-add', [PostController::class, 'CreatePost'])->name('devC-post-add');
     Route::POST('/post-add-start', [PostController::class, 'CreatePostStart'])->name('devC-post-add-start');
 
-    Route::get('/post-update/{id}',[PostController::class, 'EditPost'])->name('devC-post-update');
+    Route::get('/post-update/{id}', [PostController::class, 'EditPost'])->name('devC-post-update');
     Route::post('/post-update-start/{id}', [PostController::class, 'UpdatePostStart'])->name('devC-post-update-start');
 
     // ==================== ROUTE CATEGORY ====================
@@ -88,7 +89,7 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
     Route::POST('/category-update-start/{id}', [CategoryController::class, 'UpdateCategory'])->name('devC-cate-update-start');
     // ==================== ROUTE VIDEO ====================
 
-    Route::get('/video-index',[VideoController::class, 'IndexVideo'])->name('devC-video-index');
+    Route::get('/video-index', [VideoController::class, 'IndexVideo'])->name('devC-video-index');
     Route::get('/video-add', [VideoController::class, 'CreateVideo'])->name('devC-video-add');
     Route::post('/video-add-start', [VideoController::class, 'CreateVideoStart'])->name('devC-video-add-start');
     Route::get('/video-update/{id}', [VideoController::class, 'UpdateVideo'])->name('devC-video-update');
@@ -96,14 +97,23 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
     Route::delete('/video-delete/{id}', [VideoController::class, 'DeleteVideo'])->name('devc-video-delete');
     Route::get('/video-trash', [VideoController::class, 'TrashVideo'])->name('devc-video-trash');
     Route::get('/video-restore/{id}', [VideoController::class, 'RestoreVideo'])->name('devc-video-restore');
+
+    // ==================== ROUTE PHÂN QUYỀN ỨNG DỤNG ====================
+    //
+    Route::get('/decentralization-index', [DecentralizationController::class, 'IndexDecentralization'])->name('decentralization-index');
+    //
+    // =============== Roles / Vai trò ==========//
+    Route::get('/role-index', [DecentralizationController::class, 'IndexRole'])->name('role-index');
+    Route::get('/role-add', [DecentralizationController::class, 'CreateRole'])->name('role-add');
+
     // ==================== ROUTE SETTING ====================
 
     Route::get('/setting-user', function () {
         return view('admin.setting.users');
     })->name('devC-user');
 
-    Route::get('/setting-boot',[UserController::class, 'boot_account'])->name('devC-boot');
-    Route::post('/setting-boot-update/{id}',[UserController::class, 'boot_account_update'])->name('devC-boot-update');
+    Route::get('/setting-boot', [UserController::class, 'boot_account'])->name('devC-boot');
+    Route::post('/setting-boot-update/{id}', [UserController::class, 'boot_account_update'])->name('devC-boot-update');
 
     Route::get('/setting-overview', [SettingController::class, 'IndexSetting'])->name('devC-overview');
     Route::post('/setting-overview-change', [SettingController::class, 'ChangeSystem'])->name('devC-change-system');
@@ -116,4 +126,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
