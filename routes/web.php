@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,9 +102,8 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
         return view('admin.setting.users');
     })->name('devC-user');
 
-    Route::get('/setting-boot', function () {
-        return view('admin.setting.boot');
-    })->name('devC-boot');
+    Route::get('/setting-boot',[UserController::class, 'boot_account'])->name('devC-boot');
+    Route::post('/setting-boot-update/{id}',[UserController::class, 'boot_account_update'])->name('devC-boot-update');
 
     Route::get('/setting-overview', [SettingController::class, 'IndexSetting'])->name('devC-overview');
     Route::post('/setting-overview-change', [SettingController::class, 'ChangeSystem'])->name('devC-change-system');
