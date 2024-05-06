@@ -10,19 +10,42 @@
                 <thead>
                     <caption>
                         <td><a href="{{ route('role-index') }}" style="text-decoration: none" class="atable">Vai trò</a> |
-                            <a href="{{ route('devC-post-trash') }}" style="text-decoration: none">Phân quyền sử dụng
+                            <a href="{{ route('allocation-add') }}" style="text-decoration: none">Phân quyền sử dụng
                             </a>
                         </td>
                     </caption>
                     <tr>
                         <td>ID</td>
-                        <td>Tên bài viết</td>
-                        <td>Mô tả ngắn</td>
-                        <td>Ngày xuất bản</td>
+                        <td>Tên người dùng</td>
+                        <td>Vai trò</td>
                         <td>Chức năng</td>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($users_roles as $item)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+
+                            <td>{{ $item->name }} / {{ $item->username }}</td>
+                            <td style="padding: 10px 0;">
+                                @foreach ($item->roles as $role)
+                                    <span
+                                        style="border-radius: 5px;
+                                    background-color: #43d854;
+                                    padding: 5px 5px;
+                                    color: white;">{{ $role->name }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @if ($item->is_admin != 1)
+                                    <a href="{{ route('allocation-update', ['id' => $item->id]) }}"
+                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> <button
+                                        onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
+                                            class="bi bi-trash"></i></button>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
 
                 </tbody>
 
@@ -70,7 +93,7 @@
                         if (result.isConfirmed) {
                             const server = document.querySelector('#aebncv').innerHTML.trim();
                             const response = await axios.delete(
-                                `${server}devC/wp-admin/post-delete/${id}`);
+                                `${server}devC/wp-admin/allocation-delete/${id}`);
 
                             if (response.status == 200) {
                                 Swal.fire({

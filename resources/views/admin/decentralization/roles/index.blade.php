@@ -21,7 +21,22 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @foreach ($roles as $item)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->desc_role }}</td>
+                            <td>{{ $item->created_at }}</td>
+                            <td>
+                                @if ($item->name != 'Admin')
+                                    <a href="{{ route('role-update', ['id' => $item->id]) }}" class="btn btn-primary"><i
+                                            class="bi bi-pencil-square"></i></a> <button
+                                        onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
+                                            class="bi bi-trash"></i></button>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
 
             </table>
@@ -68,7 +83,7 @@
                         if (result.isConfirmed) {
                             const server = document.querySelector('#aebncv').innerHTML.trim();
                             const response = await axios.delete(
-                                `${server}devC/wp-admin/post-delete/${id}`);
+                                `${server}devC/wp-admin/role-delete/${id}`);
 
                             if (response.status == 200) {
                                 Swal.fire({

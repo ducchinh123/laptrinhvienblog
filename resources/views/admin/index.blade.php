@@ -136,9 +136,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 very-top-2">
-                            <div class="header__item--2__left"><a href="{{ route('devC-admin') }}">DevC Blog | @if (Auth::user())
-                                {{ Auth::user()->name }}
-                            @endif</a>
+                            <div class="header__item--2__left"><a href="{{ route('devC-admin') }}">DevC Blog |
+                                    @if (Auth::user())
+                                        {{ Auth::user()->name }}
+                                    @endif
+                                </a>
                             </div>
                             <div class="header__item--2__center">
                                 <ul>
@@ -171,10 +173,11 @@
                                     <button type="submit" class="ml-1">Tìm kiếm</button>
 
                                     @if (Auth::user())
-                                    <a href="{{ route('logout') }}" class="btn"><i class="fa-solid fa-power-off" style="font-size: 20px; color: white;"></i></a>
+                                        <a href="{{ route('logout') }}" class="btn"><i class="fa-solid fa-power-off"
+                                                style="font-size: 20px; color: white;"></i></a>
                                     @endif
                                 </form>
-                                
+
                             </div>
 
                             <div id="bar-menu"><i class="fa-solid fa-bars"></i></div>
@@ -198,9 +201,14 @@
                         <li id="sm-level-2" style="padding-bottom: 30px;">
                             Cài đặt <i class="bi bi-caret-down-fill"></i>
                             <ul>
+                                @if(Auth::user()->is_admin == 1)
                                 <li><a href="{{ route('devC-overview') }}">Tổng quan</a></li>
+                                @endif
                                 <li><a href="{{ route('devC-user') }}">Tài khoản</a></li>
-                                <li><a href="">Đăng xuất</a></li>
+
+                                @if (Auth::user())
+                                    <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
+                                @endif
                             </ul>
                         </li>
                         <li class="inputSearchMini" class="mt-3">
@@ -223,7 +231,8 @@
                         <li><i class="bi bi-book-half"></i> <a href="{{ route('devC-post-index') }}">Quản lý bài
                                 viết</a></li>
                         <li>
-                            <i class="bi bi-card-checklist"></i> <a href="{{ route('devC-cate-index') }}">Quản lý danh
+                            <i class="bi bi-card-checklist"></i> <a href="{{ route('devC-cate-index') }}">Quản lý
+                                danh
                                 mục</a>
                         </li>
                         <li><i class="bi bi-camera-video"></i> <a href="{{ route('devC-video-index') }}">Quản lý
@@ -234,8 +243,10 @@
                             <span><i class="bi bi-caret-down-fill"></i></span>
                             <!-- <i class="bi bi-caret-up-fill"></i> -->
                             <ul class="setting-submenu unactive">
+                                @if(Auth::user()->is_admin == 1)
                                 <li><i class="bi bi-palette"></i> <a href="{{ route('devC-overview') }}">Tổng
                                         quan</a></li>
+                                @endif
                                 <li><i class="bi bi-person-check"></i> <a href="{{ route('devC-user') }}">Tài
                                         khoản</a></li>
                             </ul>
@@ -266,4 +277,5 @@
 <script src="{{ asset('assets/bootstrap5/js/bootstrap.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
+
 </html>

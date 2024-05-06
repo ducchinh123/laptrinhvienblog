@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -103,5 +104,41 @@ class UserController extends Controller
 
 
         }
+    }
+
+    public function management_user()
+    {
+        $users = User::where('is_admin', '<>', 1)->orwhereNull('is_admin')->select('id', 'name', 'email', 'created_at')->get();
+        return view('admin.setting.users', compact('users'));
+    }
+
+
+    public function DeleteAccount(Request $request)
+    {
+
+        $id_user = $request->id;
+
+        if ($id_user > 0) {
+
+
+            $model_has_roles_check = DB::table('model_has_roles')->where('model_id', $id_user)->exists();
+
+            if ($model_has_roles_check) {
+                $model_has_roles = DB::table('model_has_roles')->where('model_id', $id_user)->delete();
+            }
+
+            $model_has_permissions_check = DB::table('model_has_permissions')->where('model_id', $id_user)->exists();
+
+            if ($model_has_permissions_check) {
+                $model_has_permissions = DB::table('model_has_permissions')->where('model_id', $id_user)->delete();
+            }
+
+            $user = User::find($id_user);
+            $user->delete();
+
+
+            return response()->json(['message' => 'Delete Successfully'], 200);
+        }
+        return response()->json(['message' => 'Delete Fail'], 404);
     }
 }

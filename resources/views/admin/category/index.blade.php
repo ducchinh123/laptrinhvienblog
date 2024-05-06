@@ -8,9 +8,17 @@
             <table class="table table-striped">
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-cate-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> |
-                            <a href="{{ route('devC-cate-trash') }}" style="text-decoration: none">Thùng rác
-                                ({{ $dataDeleted }})</a>
+                        <td>
+                            @if (Auth::user()->is_admin == 1 || auth()->user()->can('add category'))
+                                <a href="{{ route('devC-cate-add') }}" style="text-decoration: none" class="atable">Thêm
+                                    mới</a> |
+
+                            @endif
+                            
+                            @if (Auth::user()->is_admin == 1 || auth()->user()->can('delete category'))
+                                <a href="{{ route('devC-cate-trash') }}" style="text-decoration: none">Thùng rác
+                                    ({{ $dataDeleted }})</a>
+                            @endif
                         </td>
                     </caption>
                     <tr>
@@ -28,10 +36,16 @@
                             <td class="this-title">{{ $item->name }}</td>
                             <td class="this-desc">{{ $item->desc }}</td>
                             <td>{{ $item->created_at }}</td>
-                            <td><a href="{{ route('devC-cate-update', ['id' => $item->id]) }}" class="btn btn-primary"><i
-                                        class="bi bi-pencil-square"></i></a> <button
-                                    onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
-                                        class="bi bi-trash"></i></button></td>
+                            <td>
+                                @if (Auth::user()->is_admin == 1 || auth()->user()->can('edit category'))
+                                    <a href="{{ route('devC-cate-update', ['id' => $item->id]) }}"
+                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                @endif
+                                @if (Auth::user()->is_admin == 1 || auth()->user()->can('delete category'))
+                                    <button onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
+                                            class="bi bi-trash"></i></button>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

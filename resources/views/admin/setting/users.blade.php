@@ -9,35 +9,44 @@
 
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-boot') }}" style="text-decoration: none">Tài khoản của tôi</a> | <a href="{{ route('decentralization-index') }}" style="text-decoration: none">Phân quyền</a></td>
+                        <td><a href="{{ route('devC-boot') }}" style="text-decoration: none">Tài khoản của tôi</a>
+                            @if (Auth::user()->is_admin == 1)
+                                | <a href="{{ route('decentralization-index') }}" style="text-decoration: none">Phân quyền</a>
+                            @endif
+                        </td>
                     </caption>
-                    <tr>
-                        <td>ID</td>
-                        <td>Tên</td>
-                        <td>Email</td>
-                        <td>Ngày đăng ký</td>
-                        <td>Chức năng</td>
-                    </tr>
+                    @if (Auth::user()->is_admin == 1)
+                        <tr>
+                            <td>ID</td>
+                            <td>Tên</td>
+                            <td>Email</td>
+                            <td>Ngày đăng ký</td>
+                            <td>Chức năng</td>
+                        </tr>
+                    @endif
+
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td class="this-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum porro enim quia
-                            nostrum, numquam, esse, asperiores exercitationem sint aliquid quaerat corporis! Vero officiis
-                            reprehenderit quae in reiciendis accusamus! Voluptatem, sit.</td>
-                        <td class="this-desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel, fugiat possimus
-                            animi quaerat ullam vitae maiores nulla officia ut accusamus? Rem, soluta animi blanditiis
-                            dignissimos, assumenda autem temporibus modi error maiores ipsum expedita sint accusantium
-                            similique sit, atque sapiente perferendis enim tempore possimus harum? Quibusdam neque, tempora
-                            aspernatur quidem, necessitatibus quod voluptatum magni expedita esse eaque nobis, laudantium
-                            nemo architecto sapiente iure. Molestias!</td>
-                        <td>26/04/2024</td>
-                        <td> <button class="btn btn-danger"><i class="bi bi-trash"></i></button></td>
-                    </tr>
-                </tbody>
+                @if (Auth::user()->is_admin == 1)
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at }}</td>
+                                <td>
+                                    <button onclick="handleDelete({{ $user->id }})" class="btn btn-danger"><i
+                                            class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                @endif
 
             </table>
         </div>
+        <div style="display: none;" id="aebncv"><?php echo env('APP_SERVER'); ?></div>
     </div>
 @endsection
 
@@ -60,3 +69,44 @@
         })
     </script>
 @endsection
+
+
+@push('js-admin')
+    <script>
+        const handleDelete = async (id) => {
+            if (id) {
+                try {
+                    Swal.fire({
+                        title: "Bạn có chắc muốn xóa?",
+                        text: "",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Vâng, tôi xóa!",
+                        cancelButtonText: "Thoát",
+                    }).then(async (result) => { // Thêm async ở đây
+                        if (result.isConfirmed) {
+                            const server = document.querySelector('#aebncv').innerHTML.trim();
+                            const response = await axios.delete(
+                                `${server}devC/wp-admin/setting-user-delete/${id}`);
+
+                            if (response.status == 200) {
+                                Swal.fire({
+                                    position: "top-center",
+                                    icon: "success",
+                                    title: "Xóa bản ghi thành công!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                location.reload();
+                            }
+                        }
+                    });
+                } catch (error) {
+                    // Xử lý lỗi nếu cần
+                }
+            }
+        }
+    </script>
+@endpush

@@ -9,10 +9,17 @@
 
                 <thead>
                     <caption>
-                        <td><a href="{{ route('devC-video-add') }}" style="text-decoration: none" class="atable">Thêm mới</a> |
-                            <a href="{{ route('devc-video-trash') }}" style="text-decoration: none">Thùng rác
-                                ({{ $countDeleted }})
-                            </a>
+                        <td>
+                            @if (Auth::user()->is_admin == 1 || auth()->user()->can('add video'))
+                                <a href="{{ route('devC-video-add') }}" style="text-decoration: none" class="atable">Thêm
+                                    mới</a> |
+                            @endif
+                            
+                            @if (Auth::user()->is_admin == 1 || auth()->user()->can('delete video'))
+                                <a href="{{ route('devc-video-trash') }}" style="text-decoration: none">Thùng rác
+                                    ({{ $countDeleted }})
+                                </a>
+                            @endif
                         </td>
                     </caption>
                     <tr>
@@ -36,9 +43,16 @@
                                     allowfullscreen></iframe>
                             </td>
                             <td>{{ $item->name }}</td>
-                            <td><a href="{{ route('devC-video-update', ['id' => $item->id]) }}" class="btn btn-primary"><i
-                                        class="bi bi-pencil-square"></i></a> <button onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
-                                        class="bi bi-trash"></i></button></td>
+                            <td>
+                                @if (Auth::user()->is_admin == 1 || auth()->user()->can('edit video'))
+                                    <a href="{{ route('devC-video-update', ['id' => $item->id]) }}"
+                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                @endif
+                                @if (Auth::user()->is_admin == 1 || auth()->user()->can('delete video'))
+                                    <button onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i
+                                            class="bi bi-trash"></i></button>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
 
