@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // ====================== CLIENT =================================== //
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('client-home');
 Route::get('/bai-viet.html', [ClientPostController::class, 'HomePost'])->name('c-post-index');
 Route::get('/bai-viet-theo-danh-muc_{id}.html', [ClientPostController::class, 'BindPostById'])->name('c-post-category');
 Route::get('/video-tren-song.html', [ClientVideoController::class, 'HomeVideo'])->name('c-video');

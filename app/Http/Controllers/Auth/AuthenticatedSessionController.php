@@ -32,6 +32,17 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
+    public function storeClient(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        // khi chạy đến đây tức là đăng nhập không thành công thì nên đặt HOME != 'login' để tránh điều hướng nhiều lần
+
+        return redirect('/');
+    }
+
     /**
      * Destroy an authenticated session.
      */
@@ -44,5 +55,15 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+    public function destroyClient(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

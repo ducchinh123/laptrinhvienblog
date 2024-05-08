@@ -12,7 +12,9 @@
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,8 +84,15 @@
                         class="bi-instagram"></span></a>
                 <a href="https://www.youtube.com/channel/UCTndRQVS4R72kFrL1BWbwoA" style="font-size: 18px;"
                     target="_blank" class="mx-2"><i class="bi bi-youtube"></i></span></a>
-                <a href="{{ route('c-login') }}" style="padding-left: 6px; padding-right: 6px;"
-                    title="Tài khoản"><span><i class="bi bi-person-circle"></i></span></a>
+                @if (!Auth::check())
+                    <a href="{{ route('c-login') }}" style="padding-left: 6px; padding-right: 6px;"
+                        title="Tài khoản"><span><i class="bi bi-person-circle"></i></span></a>
+                @endif
+
+                @if (Auth::check())
+                    <a href="{{ route('logout-user') }}"><i class="fa-solid fa-power-off"
+                        style="padding-left: 6px; padding-right: 6px; color: black;"></i></a>
+                @endif
 
                 <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
                 <i class="bi bi-list mobile-nav-toggle"></i>
