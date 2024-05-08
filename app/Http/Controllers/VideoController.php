@@ -27,19 +27,21 @@ class VideoController extends Controller
 
     public function CreateVideoStart(Request $request)
     {
-        if ($request->isMethod('video')) {
+        if ($request->isMethod('POST')) {
             $validated = $request->validate(
                 [
                     'title' => ['required'],
                     'link_youtube' => ['required'],
                     'category_id' => ['required'],
-                    'image_video' => ['required']
+                    'image_video' => ['required'],
+                    'desc_video' => ['required'],
                 ],
                 [
                     'title.required' => 'Tiêu đề video không được để trống',
                     'link_youtube.required' => 'URL video không được để trống',
                     'category_id.required' => 'Danh mục video không được để trống',
-                    'image_video.required' => 'Ảnh đại diện video không được trống'
+                    'image_video.required' => 'Ảnh đại diện video không được trống',
+                    'desc_video.required' => 'Mô tả video không được trống'
                 ]
             );
 
@@ -55,7 +57,9 @@ class VideoController extends Controller
                 'title' => $request->title,
                 'link_youtube' => $request->link_youtube,
                 'category_id' => $request->category_id,
-                'image_video' => $path_then
+                'image_video' => $path_then,
+                'author_id' => $request->author_id,
+                'desc_video' => $request->desc_video
             ];
 
             $video = Video::create($data_video);
@@ -83,17 +87,19 @@ class VideoController extends Controller
 
     public function UpdateVideoStart(Request $request)
     {
-        if ($request->isMethod('video')) {
+        if ($request->isMethod('POST')) {
             $id = $request->id;
             $video = Video::find($id);
             $validated = $request->validate(
                 [
                     'title' => ['required'],
-                    'category_id' => ['required']
+                    'category_id' => ['required'],
+                    'desc_video' => ['required'],
                 ],
                 [
                     'title.required' => 'Tiêu đề video không được để trống',
-                    'category_id.required' => 'Danh mục video không được để trống'
+                    'category_id.required' => 'Danh mục video không được để trống',
+                    'desc_video.required' => 'Mô tả video không được trống'
                 ]
             );
 
@@ -109,7 +115,9 @@ class VideoController extends Controller
                 'title' => $request->title ?? $video->title,
                 'link_youtube' => $request->link_youtube ?? $video->link_youtube,
                 'category_id' => $request->category_id ?? $video->category_id,
-                'image_video' => $path_then ?? $video->image_video
+                'image_video' => $path_then ?? $video->image_video,
+                'author_id' => $request->author_id ?? $video->author_id,
+                'desc_video' => $request->desc_video ?? $video->desc_video,
             ];
 
             $video = Video::where('id', $id)->update($data_video);
@@ -119,7 +127,6 @@ class VideoController extends Controller
             }
             return redirect()->route('devC-video-update', ['id' => $id])->with('error', 'Cập nhật video không thành công');
         }
-        return view('admin.video.update');
     }
 
     public function DeleteVideo(Request $request)

@@ -11,7 +11,7 @@ class Video extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'videos_tbl';
-    protected $fillable = ['id', 'title', 'link_youtube', 'category_id', 'image_video'];
+    protected $fillable = ['id', 'title', 'link_youtube', 'category_id', 'image_video', 'author_id', 'desc_video'];
     protected $dates = ['deleted_at'];
 
     public function category() {

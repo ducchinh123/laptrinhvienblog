@@ -70,6 +70,13 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="title" class="form-label">Mô tả nội dung</label>
+                        <textarea name="desc_video" id="" cols="30" rows="10">{{ $video->desc_video }}</textarea>
+                        @error('desc_video')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="title" class="form-label">Danh mục</label>
                         <select class="js-example-disabled-results form-control" name="category_id">
                             @foreach ($categories as $cate)
@@ -91,7 +98,7 @@
                             alt="...">
                         
                     </div>
-
+                    <input type="text" class="form-control" name="author_id" id="" hidden value="{{ Auth::user()->id }}">
                 </div>
             </div>
 

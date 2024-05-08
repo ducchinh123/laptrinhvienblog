@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'posts_tbl';
-    protected $fillable = ['id', 'title', 'desc_short', 'desc_detail', 'author', 'date_submitted', 'category_id', 'overview_photo', 'view_post'];
+    protected $fillable = ['id', 'title', 'desc_short', 'desc_detail', 'author', 'date_submitted', 'category_id', 'overview_photo', 'view_post', 'author_id', 'slug'];
     protected $dates = ['deleted_at'];
 
     public function category() {

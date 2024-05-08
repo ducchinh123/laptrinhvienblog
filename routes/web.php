@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\PostController as ClientPostController;
 use App\Http\Controllers\DecentralizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
@@ -30,9 +31,7 @@ Route::get('/bai-viet.html', function () {
 Route::get('/video-tren-song', function () {
     return view('client.video');
 })->name('c-video');
-Route::get('/chi-tiet/{slug}', function () {
-    return view('client.detail_post');
-})->name('c-post-detail');
+Route::get('/chi-tiet/{slug}_{id}.html', [ClientPostController::class, 'DetailPost'])->name('c-post-detail');
 Route::get('/ve-toi.html', function () {
     return view('client.about');
 })->name('c-about');
@@ -49,6 +48,10 @@ Route::get('/dang-ky.html', function () {
     return view('client.register');
 })->name('c-register');
 
+
+// Client Post
+Route::get('/get-view-current/{id}', [PostController::class, 'get_view_current']);
+Route::put('/update-view-post/{id}', [PostController::class, 'update_view_post']);
 
 
 // Route::get('/dashboard', function () {

@@ -7,7 +7,7 @@
     <meta name="description"
         content="Sinh Viên It là một blog của một cậu sinh viên theo ngành it (mảng lập trình website), qua blog này
     cậu sinh viên muốn viết ra đây những lời tâm sự, sự trải nghiệm, niềm vui nỗi buồn mà cá nhân cậu ấy cảm nhận được. Không mong blog
-    được nhiều đọc giả vào đọc chỉ mong rằng những bài viết được đọc giả quan tâm và đóng góp ý kiến, sự chia sẻ ngược lại một cách tích cực nhất. Đó là một hạnh phúc lớn lao của ấy ấy.">
+    được nhiều đọc giả vào đọc chỉ mong rằng những bài viết được đọc giả quan tâm và đóng góp ý kiến, sự chia sẻ ngược lại một cách tích cực nhất. Đó là một hạnh phúc lớn lao của cậu ấy.">
     <meta name="keywords" content="Blog giải trí, blog tâm sự, blog chia sẻ kiến thức, công nghệ thông tin">
     <meta name="author" content="Đặng Đức Chính - Sinh viên ngành web">
     <meta name="language" content="vietnamese">

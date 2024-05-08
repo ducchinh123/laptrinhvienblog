@@ -50,14 +50,14 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="title" class="form-label">Tên bài viết</label>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Tên bài viết">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Tên bài viết" value="{{ old('title') }}">
                         @error('title')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="title" class="form-label">Tóm tắt bài viết</label>
-                        <textarea name="desc_short" class="form-control" id="" cols="30" rows="10"></textarea>
+                        <textarea name="desc_short" class="form-control" id="" cols="30" rows="10">{{old('desc_short') }}</textarea>
                         @error('desc_short')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -81,7 +81,9 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Tác giả</label>
-                                <input type="text" class="form-control" name="author" id="" readonly value="DEVC">
+                                <input type="text" class="form-control" name="author" id="" readonly value="{{ Auth::user()->name }}">
+                                <input type="text" class="form-control" name="author_id" id="" hidden value="{{ Auth::user()->id }}">
+
                                 @error('author')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -92,7 +94,7 @@
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="desc" class="form-label">Nội dung bài viết</label>
-                        <textarea name="desc_detail" id="ckeditor" class="ckeditor" cols="30" rows="10"></textarea>
+                        <textarea name="desc_detail" id="ckeditor" class="ckeditor" cols="30" rows="10">{{old('desc_detail') }}</textarea>
                         @error('desc_detail')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

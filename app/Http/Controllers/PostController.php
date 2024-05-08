@@ -70,7 +70,9 @@ class PostController extends Controller
                 'date_submitted' => $request->date_submitted,
                 'category_id' => $request->category_id,
                 'author' => $request->author,
-                'overview_photo' => $path_then
+                'author_id' => $request->author_id,
+                'overview_photo' => $path_then,
+                'slug' => create_slug($request->title)
             ];
 
 
@@ -145,7 +147,9 @@ class PostController extends Controller
                     'date_submitted' => $request->date_submitted ?? $post->date_submitted,
                     'category_id' => $request->category_id ?? $post->category_id,
                     'author' => $request->author ?? $post->author,
-                    'overview_photo' => $path_then ?? $post->overview_photo
+                    'author_id' => $request->author_id ?? $post->author_id,
+                    'overview_photo' => $path_then ?? $post->overview_photo,
+                    'slug' => create_slug($request->title) ?? $post->slug
                 ];
 
 
@@ -207,4 +211,23 @@ class PostController extends Controller
 
 
     }
+
+     // API phục vụ bên phía người dùng
+
+     public function get_view_current(Request $request)
+     {
+         $id = $request->id;
+         $view = Post::where('id', $id)->select('view_post')->first();
+         if ($view->view_post == null) {
+             return $view = 0;
+         }
+         return $view = $view->view_post;
+     }
+ 
+     public function update_view_post(Request $request)
+     {
+         $view_number = $request->view_post;
+         $id = $request->id;
+         $post_view = Post::where('id', $id)->update(['view_post' => $view_number]);
+     }
 }

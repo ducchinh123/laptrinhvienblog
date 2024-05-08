@@ -89,7 +89,9 @@
                             <div class="mb-3">
                                 <label for="title" class="form-label">Tác giả</label>
                                 <input type="text" class="form-control" name="author" id="" readonly
-                                    value="{{ $post->author }}">
+                                    value="{{ Auth::user()->name }}">
+                                <input type="text" class="form-control" name="author_id" id="" hidden
+                                    value="{{ Auth::user()->id }}">
                                 @error('author')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -110,7 +112,7 @@
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6 text-right">
-                    <input type="submit" class="btn btn-success" value="Thêm mới">
+                    <input type="submit" class="btn btn-success" value="Cập nhật">
                 </div>
             </div>
         </form>
