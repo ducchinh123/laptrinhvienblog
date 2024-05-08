@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController as ClientPostController;
+use App\Http\Controllers\Client\VideoController as ClientVideoController;
 use App\Http\Controllers\DecentralizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
@@ -26,13 +28,10 @@ use Illuminate\Support\Facades\Route;
 // ====================== CLIENT =================================== //
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/bai-viet.html', [ClientPostController::class, 'HomePost'])->name('c-post-index');
-Route::get('/video-tren-song', function () {
-    return view('client.video');
-})->name('c-video');
+Route::get('/bai-viet-theo-danh-muc_{id}.html', [ClientPostController::class, 'BindPostById'])->name('c-post-category');
+Route::get('/video-tren-song.html', [ClientVideoController::class, 'HomeVideo'])->name('c-video');
 Route::get('/chi-tiet/{slug}_{id}.html', [ClientPostController::class, 'DetailPost'])->name('c-post-detail');
-Route::get('/ve-toi.html', function () {
-    return view('client.about');
-})->name('c-about');
+Route::get('/ve-toi.html', [AboutController::class, 'HomeAbout'])->name('c-about');
 Route::get('/lien-lac.html', function () {
     return view('client.contact');
 })->name('c-contact');

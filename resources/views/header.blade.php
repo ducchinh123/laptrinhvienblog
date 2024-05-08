@@ -58,13 +58,15 @@
                     <li><a href="/">Trang chủ</a></li>
                     <li><a href="{{ route('c-post-index') }}">Bài viết</a></li>
                     <li><a href="{{ route('c-video') }}">Video</a></li>
-                    <li class="dropdown"><a href="category.html"><span>Danh mục</span> <i
+                    <li class="dropdown"><a href="" id="categorys"><span>Danh mục</span> <i
                                 class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             @foreach ($category_menu as $item)
-                            <li><a href="search-result.html">{{ $item->name }}</a></li>     
+                                <li><a
+                                        href="{{ route('c-post-category', ['id' => $item->id]) }}">{{ $item->name }}</a>
+                                </li>
                             @endforeach
-                           
+
                         </ul>
                     </li>
 
@@ -80,7 +82,8 @@
                         class="bi-instagram"></span></a>
                 <a href="https://www.youtube.com/channel/UCTndRQVS4R72kFrL1BWbwoA" style="font-size: 18px;"
                     target="_blank" class="mx-2"><i class="bi bi-youtube"></i></span></a>
-                    <a href="{{ route('c-login') }}" style="padding-left: 6px; padding-right: 6px;" title="Tài khoản"><span><i class="bi bi-person-circle"></i></span></a>
+                <a href="{{ route('c-login') }}" style="padding-left: 6px; padding-right: 6px;"
+                    title="Tài khoản"><span><i class="bi bi-person-circle"></i></span></a>
 
                 <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -94,10 +97,10 @@
                     </form>
                 </div><!-- End Search Form -->
 
-                
+
 
             </div>
-            
+
         </div>
 
     </header><!-- End Header -->

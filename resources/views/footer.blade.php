@@ -20,7 +20,7 @@
                         <li><a href="/"><i class="bi bi-chevron-right"></i> Trang chủ</a></li>
                         <li><a href="{{ route('c-post-index') }}"><i class="bi bi-chevron-right"></i> Bài viết</a>
                         </li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Danh mục</a></li>
+                        <li><a href="#categorys"><i class="bi bi-chevron-right"></i> Danh mục</a></li>
                         <li><a href="{{ route('c-about') }}"><i class="bi bi-chevron-right"></i>Về tôi</a></li>
                         <li><a href="{{ route('c-contact') }}"><i class="bi bi-chevron-right"></i>Liên lạc</a></li>
                     </ul>
@@ -29,7 +29,7 @@
                     <h3 class="footer-heading">Danh mục hiện có</h3>
                     <ul class="footer-links list-unstyled">
                         @foreach ($category_menu as $item)
-                        <li><i class="bi bi-chevron-right"></i> <a href="search-result.html">{{ $item->name }}</a></li>     
+                        <li><i class="bi bi-chevron-right"></i> <a href="{{ route('c-post-category', ['id' => $item->id]) }}">{{ $item->name }}</a></li>     
                         @endforeach
 
                     </ul>

@@ -1,8 +1,6 @@
 @extends('index')
 @section('content')
     <main id="main">
-
-
         @if ($settings->choose_banner == 1)
             <!-- ======= Hero Slider Section ======= -->
             <section id="hero-slider" class="hero-slider">
