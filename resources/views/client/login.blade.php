@@ -24,7 +24,7 @@
         @enderror
         
         <div style=""><a href="{{ route('c-register') }}" style="text-decoration: none; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Bạn chưa có tài khoản?</a></div>
-        <div style=""><a href="" style="text-decoration: none; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Bạn quên mật khẩu?</a></div>
+        <div style=""><a href="{{ route('password.request') }}" style="text-decoration: none; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Bạn quên mật khẩu?</a></div>
         <input type="submit" class="form-submit" name="send-login" value="Đăng nhập">
     </form>
 </div>

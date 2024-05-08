@@ -37,11 +37,13 @@ Route::get('/lien-lac.html', [ContactController::class, 'HomeContact'])->name('c
 Route::post('/send-contact', [ContactController::class, 'SendMail'])->name('send-contact');
 
 Route::get('/dang-nhap.html', function () {
-    return view('client.login');
+    $title = 'Đăng nhập | DevC Blog';
+    return view('client.login', compact('title'));
 })->name('c-login');
 
 Route::get('/dang-ky.html', function () {
-    return view('client.register');
+    $title = 'Đăng ký | DevC Blog';
+    return view('client.register', compact('title'));
 })->name('c-register');
 
 
