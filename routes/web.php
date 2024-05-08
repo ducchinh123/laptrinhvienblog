@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\AboutController;
+use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController as ClientPostController;
 use App\Http\Controllers\Client\VideoController as ClientVideoController;
@@ -32,10 +33,8 @@ Route::get('/bai-viet-theo-danh-muc_{id}.html', [ClientPostController::class, 'B
 Route::get('/video-tren-song.html', [ClientVideoController::class, 'HomeVideo'])->name('c-video');
 Route::get('/chi-tiet/{slug}_{id}.html', [ClientPostController::class, 'DetailPost'])->name('c-post-detail');
 Route::get('/ve-toi.html', [AboutController::class, 'HomeAbout'])->name('c-about');
-Route::get('/lien-lac.html', function () {
-    return view('client.contact');
-})->name('c-contact');
-
+Route::get('/lien-lac.html', [ContactController::class, 'HomeContact'])->name('c-contact');
+Route::post('/send-contact', [ContactController::class, 'SendMail'])->name('send-contact');
 
 Route::get('/dang-nhap.html', function () {
     return view('client.login');
