@@ -31,6 +31,7 @@
     <link href="{{ asset('assets/css/variables.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <!-- =======================================================
   * Template Name: ZenBlog
   * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/

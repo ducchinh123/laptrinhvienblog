@@ -41,7 +41,7 @@
                     <ul class="footer-links footer-blog-entry list-unstyled">
                         @foreach ($posts_menu as $item)
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
+                            <a href="{{ route('c-post-detail', ['slug' => $item->slug, 'id' => $item->idPost ]) }}" class="d-flex align-items-center">
                                 <img src="{{ $item->overview_photo }}" alt="" class="img-fluid me-3">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">{{ $item->name }}</span> <span
