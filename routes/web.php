@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 // ====================== CLIENT =================================== //
 Route::get('/', [HomeController::class, 'index'])->name('client-home');
 Route::get('/bai-viet.html', [ClientPostController::class, 'HomePost'])->name('c-post-index');
+Route::post('/tim-kiem-bai-viet.html', [ClientPostController::class, 'SearchPost'])->name('c-post-search');
 Route::get('/bai-viet-theo-danh-muc_{id}.html', [ClientPostController::class, 'BindPostById'])->name('c-post-category');
 Route::get('/video-tren-song.html', [ClientVideoController::class, 'HomeVideo'])->name('c-video');
 Route::get('/chi-tiet/{slug}_{id}.html', [ClientPostController::class, 'DetailPost'])->name('c-post-detail');
@@ -66,6 +67,9 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
     // ==================== ROUTE DASHBOARD ====================
     Route::get('/', [DashboardController::class, 'IndexDashboard'])->name('devC-admin');
     Route::get('/post-view-tallest/{option}', [DashboardController::class, 'PostViewTallest'])->name('devC-post-view-tallest');
+    Route::get('/post-comment-top/{option}', [DashboardController::class, 'PostCareAbout']);
+    Route::get('/post-category-top/{option}', [DashboardController::class, 'CategoryPostTop']);
+
 
     // ==================== ROUTE POST ====================
     Route::get('/post-index', [PostController::class, 'IndexPost'])->name('devC-post-index')->middleware(['permission:admin|add post|edit post|delete post']);
@@ -121,9 +125,9 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
 
     // ==================== ROUTE COMMENT ====================
 
-    Route::get('/comment-index', [CommentController::class, 'IndexComment'])->name('devc-comment-index');
-    Route::post('/comment-index-search', [CommentController::class, 'SearchComment'])->name('devc-comment-search');
-    Route::delete('/comment-delete/{id}', [CommentController::class, 'DeleteComment'])->name('devc-comment-delete');
+    Route::get('/comment-index', [CommentController::class, 'IndexComment'])->name('devc-comment-index')->middleware(['permission:admin|delete comment']);
+    Route::post('/comment-index-search', [CommentController::class, 'SearchComment'])->name('devc-comment-search')->middleware(['permission:admin|delete comment']);
+    Route::delete('/comment-delete/{id}', [CommentController::class, 'DeleteComment'])->name('devc-comment-delete')->middleware(['permission:admin|delete comment']);
     // ==================== ROUTE SETTING ====================
 
     Route::get('/setting-user', [UserController::class, 'management_user'])->name('devC-user');

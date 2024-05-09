@@ -104,7 +104,7 @@
                             <h3 class="aside-title">Danh mục</h3>
                             <ul class="aside-links list-unstyled">
                                 @foreach ($category_menu as $item)
-                                    <li><a href=""><i class="bi bi-chevron-right"></i> {{ $item->name }}</a></li>
+                                    <li><a href="{{ route('c-post-category', ['id' => $item->id]) }}"><i class="bi bi-chevron-right"></i> {{ $item->name }}</a></li>
                                 @endforeach
 
                             </ul>

@@ -228,7 +228,7 @@
             <div id="sidebar-left">
                 <div class="list-menu-manager-admin">
                     <ul>
-                        <li><i class="bi bi-speedometer"></i> <a href="">Dashboard</a></li>
+                        <li><i class="bi bi-speedometer"></i> <a href="{{ route('devC-admin') }}">Dashboard</a></li>
                         <li><i class="bi bi-book-half"></i> <a href="{{ route('devC-post-index') }}">Quản lý bài
                                 viết</a></li>
                         <li>
@@ -392,23 +392,33 @@
                                 <thead>
                                     <caption>
                                         <td>Top bài viết có lượt quan tâm nhiều nhất
-                                            <select name="" id="">
-                                                <option value="">Tuần này</option>
-                                                <option value="">Tháng này</option>
-                                                <option value="">Năm này</option>
+                                            <select name="" id="ctop_post">
+                                                <option value="tw-ctp">Tuần này</option>
+                                                <option value="tm-ctp">Tháng này</option>
+                                                <option value="ty-ctp">Năm này</option>
                                             </select>
                                         </td>
                                     </caption>
                                     <tr>
                                         <td>ID</td>
                                         <td>Tên bài viết</td>
-                                        <td>Mô tả ngắn</td>
                                         <td>Ngày xuất bản</td>
+                                        <td>Lượt quan tâm</td>
                                         <td>Ghé xem</td>
                                     </tr>
                                 </thead>
-                                <tbody>
-
+                                <tbody id="comenttop_post">
+                                    @foreach ($ctop_post as $item)
+                                        <tr>
+                                            <td>{{ $item->id }}</td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->date_submitted }}</td>
+                                            <td>{{ $item->comment_count }}</td>
+                                            <td><a
+                                                    href="{{ env('APP_SERVER') }}chi-tiet/{{ $item->slug . '_' . $item->id . '.html' }}">Đi
+                                                    đến</a></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
 
                             </table>
@@ -421,23 +431,30 @@
                                     <caption>
                                         <td>Chủ đề đang được độc giả quan tâm
 
-                                            <select name="" id="">
-                                                <option value="">Tuần này</option>
-                                                <option value="">Tháng này</option>
-                                                <option value="">Năm này</option>
+                                            <select name="" id="catetop_post">
+                                                <option value="tw-catp">Tuần này</option>
+                                                <option value="tm-catp">Tháng này</option>
+                                                <option value="ty-catp">Năm này</option>
                                             </select>
                                         </td>
                                     </caption>
                                     <tr>
                                         <td>ID</td>
-                                        <td>Tên bài viết</td>
-                                        <td>Mô tả ngắn</td>
+                                        <td>Tên chủ đề</td>
+                                        <td>Tổng số bình luận và lượt xem</td>
                                         <td>Ngày xuất bản</td>
-                                        <td>Ghé xem</td>
                                     </tr>
                                 </thead>
-                                <tbody>
-
+                                <tbody id="catop_post">
+                                    @foreach ($catetop_post as $item)
+                                        <tr>
+                                            <td>{{ $item->id }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->comment_count }} bình luận & {{ $item->total_views }} lượt
+                                                xem</td>
+                                            <td>{{ $item->created_at }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
 
                             </table>
@@ -474,7 +491,81 @@
                                             `
                                         });
 
-                                        
+
+                                        bodyTable.innerHTML = htmls;
+                                    })
+                                    .catch(function(error) {
+                                        console.error('Error fetching data:', error);
+                                    });
+
+                            }
+                        })
+
+                        var ctop_post = document.getElementById('ctop_post');
+
+                        ctop_post.addEventListener("change", (e) => {
+                            var selectedValue = ctop_post.value;
+                            var htmls = '';
+                            if (selectedValue != "") {
+
+                                axios.get(`${server}devC/wp-admin/post-comment-top/${selectedValue}`)
+                                    .then(function(response) {
+                                        var responseData = response.data;
+                                        // console.log(responseData);
+                                        // // Lưu ý: đổi tên biến để tránh ghi đè biến response ban đầu
+                                        var bodyTable = document.getElementById('comenttop_post');
+                                        responseData.data.forEach(element => {
+                                            // mỗi element là 1 post   
+                                            htmls +=
+                                                `<tr>
+                                            <td>${element.id}</td>
+                                            <td>${element.title}</td>
+                                            <td>${element.date_submitted}</td>
+                                            <td>${element.comment_count}</td>
+                                            <td>
+                                                <a href="${server}chi-tiet/${element.slug}_${element.id}.html">Đi
+                                                    đến</a>
+                                                    </td>
+                                        </tr>
+                                            `
+                                        });
+
+
+                                        bodyTable.innerHTML = htmls;
+                                    })
+                                    .catch(function(error) {
+                                        console.error('Error fetching data:', error);
+                                    });
+
+                            }
+                        })
+
+                        var catetop_post = document.getElementById('catetop_post');
+
+                        catetop_post.addEventListener("change", (e) => {
+                            var selectedValue = catetop_post.value;
+                            var htmls = '';
+                            if (selectedValue != "") {
+
+                                axios.get(`${server}devC/wp-admin/post-category-top/${selectedValue}`)
+                                    .then(function(response) {
+                                        var responseData = response.data;
+                                        console.log(responseData);
+                                        // // Lưu ý: đổi tên biến để tránh ghi đè biến response ban đầu
+                                        var bodyTable = document.getElementById('catop_post');
+                                        responseData.data.forEach(element => {
+                                            // mỗi element là 1 post   
+                                            htmls +=
+                                                `<tr>
+                                            <td>${element.id}</td>
+                                            <td>${element.name}</td>
+                                            <td>${element.comment_count} bình luận & ${element.total_views }</td>
+                                            <td>${element.created_at}</td>
+                                        </tr>
+                                            `
+                                        });
+
+
                                         bodyTable.innerHTML = htmls;
                                     })
                                     .catch(function(error) {

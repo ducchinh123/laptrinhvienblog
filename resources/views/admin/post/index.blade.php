@@ -40,7 +40,7 @@
                             <td>
                                 @if (Auth::user()->is_admin == 1 || auth()->user()->can('edit post'))
                                     <a href="{{ route('devC-post-update', ['id' => $item->id]) }}"
-                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                        class="btn btn-primary mb-2"><i class="bi bi-pencil-square"></i></a>
                                 @endif
                                 @if (Auth::user()->is_admin == 1 || auth()->user()->can('delete post'))
                                     <button onclick="handleDelete({{ $item->id }})" class="btn btn-danger"><i

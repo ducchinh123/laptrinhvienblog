@@ -62,6 +62,10 @@
                                         @if ($permission->name == 'delete video')
                                             Xóa video
                                         @endif
+
+                                        @if ($permission->name == 'delete comment')
+                                            Xóa bình luận
+                                        @endif
                                     </label>
                                 </div>
                             @endforeach

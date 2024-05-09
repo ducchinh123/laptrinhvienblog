@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
     <base href="http://127.0.0.1:8000/">
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/D.png" rel="icon" style="border-radius: 30px;">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -91,7 +91,7 @@
 
                 @if (Auth::check())
                     <a href="{{ route('logout-user') }}"><i class="fa-solid fa-power-off"
-                        style="padding-left: 6px; padding-right: 6px; color: black;"></i></a>
+                            style="padding-left: 6px; padding-right: 6px; color: black;"></i></a>
                 @endif
 
                 <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
@@ -99,10 +99,19 @@
 
                 <!-- ======= Search Form ======= -->
                 <div class="search-form-wrap js-search-form-wrap">
-                    <form action="search-result.html" class="search-form">
-                        <span class="icon bi-search"></span>
-                        <input type="text" placeholder="Tìm kiếm bài viết" class="form-control">
-                        <button class="btn js-search-close"><span class="bi-x"></span></button>
+                    <form action="{{ route('c-post-search') }}" method="POST" class="search-form">
+                        @csrf
+                        <button type="submit"
+                            style="background: none;
+                        position: absolute;
+                        left: 0;
+                        top: 7px;
+                        opacity: 0.5;
+                        left: 10px;
+                        border: none;
+                        outline: none;"><span style="top: 0; left: -3px;" class="icon bi-search"></span></button>
+                        <input type="text" placeholder="Tìm kiếm bài viết" name="title" class="form-control">
+                        <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
                     </form>
                 </div><!-- End Search Form -->
 
