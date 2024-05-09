@@ -71,7 +71,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="title" class="form-label">Mô tả nội dung</label>
-                        <textarea name="desc_video" id="" cols="30" rows="10">{{ $video->desc_video }}</textarea>
+                        <textarea name="desc_video" id="" class="form-control" cols="30" rows="10">{{ $video->desc_video }}</textarea>
                         @error('desc_video')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

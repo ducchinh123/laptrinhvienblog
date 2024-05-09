@@ -6,6 +6,8 @@ use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController as ClientPostController;
 use App\Http\Controllers\Client\VideoController as ClientVideoController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecentralizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
@@ -61,9 +63,9 @@ Route::put('/update-view-post/{id}', [PostController::class, 'update_view_post']
 
 
 Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    })->name('devC-admin');
+    // ==================== ROUTE DASHBOARD ====================
+    Route::get('/', [DashboardController::class, 'IndexDashboard'])->name('devC-admin');
+    Route::get('/post-view-tallest/{option}', [DashboardController::class, 'PostViewTallest'])->name('devC-post-view-tallest');
 
     // ==================== ROUTE POST ====================
     Route::get('/post-index', [PostController::class, 'IndexPost'])->name('devC-post-index')->middleware(['permission:admin|add post|edit post|delete post']);
@@ -116,6 +118,12 @@ Route::prefix('/devC/wp-admin')->middleware(['auth', 'verified', 'checkAdmin'])-
     Route::get('/allocation-update/{id}', [DecentralizationController::class, 'UpdateAllocation'])->name('allocation-update')->middleware(['permission:admin']);
     Route::post('/allocatiom-update-start/{id}', [DecentralizationController::class, 'UpdateAllocationStart'])->name('allocation-update-start')->middleware(['permission:admin']);
     Route::delete('allocation-delete/{id}', [DecentralizationController::class, 'DeleteAllocation'])->middleware(['permission:admin']);
+
+    // ==================== ROUTE COMMENT ====================
+
+    Route::get('/comment-index', [CommentController::class, 'IndexComment'])->name('devc-comment-index');
+    Route::post('/comment-index-search', [CommentController::class, 'SearchComment'])->name('devc-comment-search');
+    Route::delete('/comment-delete/{id}', [CommentController::class, 'DeleteComment'])->name('devc-comment-delete');
     // ==================== ROUTE SETTING ====================
 
     Route::get('/setting-user', [UserController::class, 'management_user'])->name('devC-user');

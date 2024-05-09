@@ -198,11 +198,12 @@
                         <li><a href="{{ route('devC-post-index') }}">Quản lý bài viết</a></li>
                         <li><a href="{{ route('devC-cate-index') }}">Quản lý danh mục</a></li>
                         <li><a href="{{ route('devC-video-index') }}">Quản lý video</a></li>
+                        <li><a href="{{ route('devc-comment-index') }}">Quản lý bình luận</a></li>
                         <li id="sm-level-2" style="padding-bottom: 30px;">
                             Cài đặt <i class="bi bi-caret-down-fill"></i>
                             <ul>
-                                @if(Auth::user()->is_admin == 1)
-                                <li><a href="{{ route('devC-overview') }}">Tổng quan</a></li>
+                                @if (Auth::user()->is_admin == 1)
+                                    <li><a href="{{ route('devC-overview') }}">Tổng quan</a></li>
                                 @endif
                                 <li><a href="{{ route('devC-user') }}">Tài khoản</a></li>
 
@@ -238,14 +239,18 @@
                         <li><i class="bi bi-camera-video"></i> <a href="{{ route('devC-video-index') }}">Quản lý
                                 video</a></li>
 
+                        <li><i class="fa-regular fa-comment"></i></i> <a
+                                href="{{ route('devc-comment-index') }}">Quản lý
+                                bình luận</a></li>
+
                         <li class="setting-menu">
                             <i class="bi bi-gear-wide-connected"></i> <button>Cài đặt website</button>
                             <span><i class="bi bi-caret-down-fill"></i></span>
                             <!-- <i class="bi bi-caret-up-fill"></i> -->
                             <ul class="setting-submenu unactive">
-                                @if(Auth::user()->is_admin == 1)
-                                <li><i class="bi bi-palette"></i> <a href="{{ route('devC-overview') }}">Tổng
-                                        quan</a></li>
+                                @if (Auth::user()->is_admin == 1)
+                                    <li><i class="bi bi-palette"></i> <a href="{{ route('devC-overview') }}">Tổng
+                                            quan</a></li>
                                 @endif
                                 <li><i class="bi bi-person-check"></i> <a href="{{ route('devC-user') }}">Tài
                                         khoản</a></li>
@@ -256,17 +261,243 @@
             </div>
 
             <div id="content">
-                @yield('content')
-                @yield('cut-string')
-                @yield('select2')
-                @stack('js-video')
-                @stack('js-admin')
+
+                @if (request()->route()->getName() == 'devC-admin')
+                    <div class="container">
+                        <div id="content__topic--1">
+                            <h5 class="">Tổng quan</h5>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 18rem; background-color: #F8444F;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số bài viết</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $post_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devC-post-index') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card" style="width: 18rem; background-color: #C0EA6A;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số video</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $video_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devC-video-index') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card" style="width: 18rem; background-color: #FFCC59;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số danh mục</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $category_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devC-cate-index') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 d-md-none">
+                                <div class="card" style="width: 18rem; background-color: #F8476B;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số người dùng</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $user_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devC-user') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-5 col-12 d-none d-md-block">
+                                <div class="card" style="width: 18rem; background-color: #F8476B; float: right; ">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số người dùng</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $user_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devC-user') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 d-none d-md-block"></div>
+                            <div class="col-md-6 col-12">
+                                <div class="card" style="width: 18rem; background-color: #E9E6DD; float: left;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-white">Tổng số bình luận</h5>
+                                        <p class="card-text">
+                                        <h1 class="text-center">{{ $comment_total }}</h1>
+                                        </p>
+                                        <a href="{{ route('devc-comment-index') }}" class="btn btn-light">Đi đến</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div id="content__topic--1">
+                            <h5 class="">Cụ thể báo cáo</h5>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-striped">
+
+                                <thead>
+                                    <caption>
+                                        <td>Top bài viết có lượt xem cao nhất
+                                            <!--- pvt - post view tallest !-->
+                                            <select name="" id="pvt">
+                                                <option value="tw-pvt">Tuần này</option>
+                                                <option value="tm-pvt">Tháng này</option>
+                                                <option value="ty-pvt">Năm này</option>
+                                            </select>
+                                        </td>
+                                    </caption>
+
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Tên bài viết</td>
+                                        <td>Ngày xuất bản</td>
+                                        <td>Lượt xem</td>
+                                        <td>Ghé xem</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="vtop_post">
+                                    @foreach ($vtop_post as $item)
+                                        <tr>
+                                            <td>{{ $item->id }}</td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->date_submitted }}</td>
+                                            <td>{{ $item->view_post }}</td>
+                                            <td><a
+                                                    href="{{ env('APP_SERVER') }}chi-tiet/{{ $item->slug . '_' . $item->id . '.html' }}">Đi
+                                                    đến</a></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-striped">
+
+                                <thead>
+                                    <caption>
+                                        <td>Top bài viết có lượt quan tâm nhiều nhất
+                                            <select name="" id="">
+                                                <option value="">Tuần này</option>
+                                                <option value="">Tháng này</option>
+                                                <option value="">Năm này</option>
+                                            </select>
+                                        </td>
+                                    </caption>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Tên bài viết</td>
+                                        <td>Mô tả ngắn</td>
+                                        <td>Ngày xuất bản</td>
+                                        <td>Ghé xem</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-striped">
+
+                                <thead>
+                                    <caption>
+                                        <td>Chủ đề đang được độc giả quan tâm
+
+                                            <select name="" id="">
+                                                <option value="">Tuần này</option>
+                                                <option value="">Tháng này</option>
+                                                <option value="">Năm này</option>
+                                            </select>
+                                        </td>
+                                    </caption>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Tên bài viết</td>
+                                        <td>Mô tả ngắn</td>
+                                        <td>Ngày xuất bản</td>
+                                        <td>Ghé xem</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div style="display: none;" id="aebncv"><?php echo env('APP_SERVER'); ?></div>
+                    <script>
+                        var pvt = document.getElementById('pvt');
+                        const server = document.querySelector('#aebncv').innerHTML.trim();
+                        pvt.addEventListener("change", (e) => {
+                            var selectedValue = pvt.value;
+                            var htmls = '';
+                            if (selectedValue != "") {
+
+                                axios.get(`${server}devC/wp-admin/post-view-tallest/${selectedValue}`)
+                                    .then(function(response) {
+                                        var responseData = response.data;
+                                        console.log(responseData);
+                                        // // Lưu ý: đổi tên biến để tránh ghi đè biến response ban đầu
+                                        var bodyTable = document.getElementById('vtop_post');
+                                        responseData.data.forEach(element => {
+                                            // mỗi element là 1 post   
+                                            htmls +=
+                                                `<tr>
+                                            <td>${element.id}</td>
+                                            <td>${element.title}</td>
+                                            <td>${element.date_submitted}</td>
+                                            <td>${element.view_post}</td>
+                                            <td>
+                                                <a href="${server}chi-tiet/${element.slug}_${element.id}.html">Đi
+                                                    đến</a>
+                                                    </td>
+                                        </tr>
+                                            `
+                                        });
+
+                                        
+                                        bodyTable.innerHTML = htmls;
+                                    })
+                                    .catch(function(error) {
+                                        console.error('Error fetching data:', error);
+                                    });
+
+                            }
+                        })
+                    </script>
+
             </div>
+            @endif
+            @yield('content')
+            @yield('cut-string')
+            @yield('select2')
+            @stack('js-video')
+            @stack('js-admin')
         </div>
-        <div class="middle-line"></div>
-        <div id="footer">
-            <p class="text-center">Hãy là một người quản lý website thông minh nhất</p>
-        </div>
+    </div>
+    <div class="middle-line"></div>
+    <div id="footer">
+        <p class="text-center">Hãy là một người quản lý website thông minh nhất</p>
+    </div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
